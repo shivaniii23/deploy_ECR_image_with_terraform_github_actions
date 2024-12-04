@@ -16,7 +16,7 @@ jobs:
   deploy-infra:
     runs-on: ubuntu-latest
     outputs:
-      SERVER_PUBLIC_IP: ${{ steps.output.outputs.instance_public_ip }}
+      SERVER_PUBLIC_IP: ${{ steps.set-output.outputs.instance_public_ip }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -43,7 +43,7 @@ jobs:
         run: terraform apply PLAN
         working-directory: ./terraform
       - name: terraform output
-        id: output
+        id: set-output
         run: echo "::set-output name=instance_public_ip::$( terraform output instance_public_ip )"
   deploy-app:
     runs-on: ubuntu-latest
